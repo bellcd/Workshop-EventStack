@@ -13,7 +13,8 @@ export default class App extends Component {
         {name: 'JSConf'},
         {name: 'VueConf'},
         {name: 'ReactConf'}
-      ]
+      ],
+      filteredEvents: []
     }
 
     this.search = this.search.bind(this);
@@ -27,7 +28,11 @@ export default class App extends Component {
   }
 
   search() {
+    const filteredEvents = this.state.events.filter((event) => {
+      return event.name.includes(this.state.searchTerm);
+    });
 
+    this.setState({ filteredEvents });
   }
 
 
@@ -38,6 +43,9 @@ export default class App extends Component {
         <EventList events={this.state.events}></EventList>
         <input type="text" onChange={this.updateSearch} value={this.searchTerm}></input>
         <button onClick={this.search}>Search</button>
+
+        <div>Matches and Partial Matches</div>
+        <EventList events={this.state.filteredEvents}></EventList>
       </div>
     )
   }
