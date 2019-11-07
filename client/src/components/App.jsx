@@ -99,16 +99,6 @@ export default class App extends Component {
     this.setState({ cost: e.target.value })
   }
 
-  // addEvent() {
-  //   this.addEvent(event);
-
-  //   // this.setState((state, props) => {
-  //   //   state.events.push();
-
-  //   //   return { events: state.events };
-  //   // });
-  // }
-
   updateSearch(e) {
     this.setState({
       searchTerm: e.target.value
@@ -116,8 +106,9 @@ export default class App extends Component {
   }
 
   search() {
+    const s = this.state.searchTerm;
     const filteredEvents = this.state.events.filter((event) => {
-      return event.name.includes(this.state.searchTerm);
+      return (event.title.includes(s) || event.summary.includes(s) || event.description.includes(s));
     });
 
     if (filteredEvents.length === 0) {
