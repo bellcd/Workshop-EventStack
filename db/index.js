@@ -24,7 +24,7 @@ db.on('open', () => {
   // });
 
   module.exports = {
-    connection: mongoose
+    Event
   }
 });
 
