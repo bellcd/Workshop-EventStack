@@ -6,19 +6,30 @@ export default class App extends Component {
     super(props)
 
     this.state = {
+      userInputtedEvent: '',
       searchTerm: '',
-      events: [
-        {name: 'AngularConnect'},
-        {name: 'DevFest'},
-        {name: 'JSConf'},
-        {name: 'VueConf'},
-        {name: 'ReactConf'}
-      ],
+      events: [],
       filteredEvents: []
     }
 
     this.search = this.search.bind(this);
     this.updateSearch = this.updateSearch.bind(this);
+    this.updateUserInputtedEvent = this.updateUserInputtedEvent.bind(this);
+    this.addUserInputtedEvent = this.addUserInputtedEvent.bind(this);
+  }
+
+  updateUserInputtedEvent(e) {
+    this.setState({
+      userInputtedEvent: e.target.value
+    });
+  }
+
+  addUserInputtedEvent() {
+    this.setState((state, props) => {
+      state.events.push({ name: state.userInputtedEvent });
+
+      return { events: state.events };
+    });
   }
 
   updateSearch(e) {
@@ -44,10 +55,19 @@ export default class App extends Component {
     return (
       <div>
         <h1>EventStack</h1>
+        <div>
+          Add Your Event:
+          <label htmlFor="user-inputted-event"></label>
+          <input id="user-inputted-event" type="text" value={this.state.userInputtedEvent} onChange={this.updateUserInputtedEvent}></input>
+          <button onClick={this.addUserInputtedEvent}>Add</button>
+        </div>
         <EventList events={this.state.events}></EventList>
-        <input type="text" onChange={this.updateSearch} value={this.searchTerm}></input>
-        <button onClick={this.search}>Search</button>
-
+        <div>
+          Search for an event
+          <label htmlFor="search-term"></label>
+          <input id="search-term" type="text" value={this.searchTerm} onChange={this.updateSearch}></input>
+          <button onClick={this.search}>Search</button>
+        </div>
         <div>Matches and Partial Matches</div>
         <EventList events={this.state.filteredEvents}></EventList>
       </div>
