@@ -21,6 +21,8 @@ export default class App extends Component {
     this.search = this.search.bind(this);
     this.updateSearch = this.updateSearch.bind(this);
     this.addEvent = this.addEvent.bind(this);
+    this.getEvents = this.getEvents.bind(this);
+    this.addEvent = this.addEvent.bind(this);
 
     this.updateTitle = this.updateTitle.bind(this);
     this.updateDescription = this.updateDescription.bind(this);
@@ -31,12 +33,41 @@ export default class App extends Component {
   }
 
   componentDidMount() {
+    this.getEvents();
+  }
+
+  getEvents() {
     $.ajax({
       url: `http://localhost:3007/events`,
       method: 'GET',
       dataType: 'json',
       success: (events) => {
         this.setState({ events });
+      },
+      error: (err) => {
+        console.log(err);
+      }
+    });
+  }
+
+  addEvent() {
+    const event = {
+      title: this.state.title,
+      description: this.state.description,
+      summary: this.state.summary,
+      startDate: this.state.startDate,
+      endDate: this.state.endDate,
+      cost: this.state.cost
+    };
+
+    $.ajax({
+      url: `http://localhost:3007/event`,
+      method: 'POST',
+      contentType: 'application/json',
+      data: JSON.stringify(event),
+      success: (data) => {
+        console.log('event saved to database!')
+        this.getEvents();
       },
       error: (err) => {
         console.log(err);
@@ -68,20 +99,15 @@ export default class App extends Component {
     this.setState({ cost: e.target.value })
   }
 
-  addEvent() {
-    this.setState((state, props) => {
-      state.events.push({
-        title: state.title,
-        description: state.description,
-        summary: state.summary,
-        startDate: state.startDate,
-        endDate: state.endDate,
-        cost: state.cost
-      });
+  // addEvent() {
+  //   this.addEvent(event);
 
-      return { events: state.events };
-    });
-  }
+  //   // this.setState((state, props) => {
+  //   //   state.events.push();
+
+  //   //   return { events: state.events };
+  //   // });
+  // }
 
   updateSearch(e) {
     this.setState({

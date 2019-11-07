@@ -12,8 +12,8 @@ const eventSchema = new mongoose.Schema({
   title: String,
   description: String,
   summary: String,
-  start_date: Date,
-  end_date: Date,
+  startDate: Date,
+  endDate: Date,
   cost: Number
 });
 

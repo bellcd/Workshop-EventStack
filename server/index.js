@@ -11,7 +11,6 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(morgan('dev'));
 
-// TODO: add route for getting all events
 app.get('/events', (req, res, next) => {
   controller.getEvents((err, events) => {
     if (err) {
@@ -19,6 +18,17 @@ app.get('/events', (req, res, next) => {
       res.status(400).send();
     } else {
       res.status(200).send(JSON.stringify(events));
+    }
+  });
+});
+
+app.post('/event', (req, res, next) => {
+  controller.addEvent(req.body, (err, event) => {
+    if (err) {
+      console.log(err);
+      res.status(400).send();
+    } else {
+      res.status(200).send();
     }
   });
 });
