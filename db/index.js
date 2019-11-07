@@ -4,27 +4,22 @@ const db = mongoose.connection;
 
 db.on('error', (err) => console.log(err));
 db.on('open', () => {
-
-  const eventSchema = new mongoose.Schema({
-    id: String,
-    title: String,
-    description: String,
-    summary: String,
-    start_date: Date,
-    end_date: Date,
-    cost: Number
-  });
-
-  const Event = mongoose.model('Event', eventSchema);
-
-  // Event.insertMany(events, (err) => {
-  //   if (err) { console.log(err); }
-
-  //   console.log('inserted!');
-  // });
-
-  module.exports = {
-    Event
-  }
+  // TODO: is all of the code that interacts with the db supposed to be in this callback? If so, how can the Mongoos object interact with other modules??
 });
+
+const eventSchema = new mongoose.Schema({
+  id: String,
+  title: String,
+  description: String,
+  summary: String,
+  start_date: Date,
+  end_date: Date,
+  cost: Number
+});
+
+const Event = mongoose.model('Event', eventSchema);
+
+module.exports = {
+  Event
+}
 

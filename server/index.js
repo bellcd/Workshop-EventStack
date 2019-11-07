@@ -12,5 +12,15 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(morgan('dev'));
 
 // TODO: add route for getting all events
+app.get('/events', (req, res, next) => {
+  controller.getEvents((err, events) => {
+    if (err) {
+      console.log(err);
+      res.status(400).send();
+    } else {
+      res.status(200).send(JSON.stringify(events));
+    }
+  });
+});
 
 app.listen(PORT, () => console.log(`app is listening on port ${PORT}`));

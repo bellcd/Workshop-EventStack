@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import EventList from './EventList.jsx';
+import $ from 'jquery';
 
 export default class App extends Component {
   constructor(props) {
@@ -16,6 +17,20 @@ export default class App extends Component {
     this.updateSearch = this.updateSearch.bind(this);
     this.updateUserInputtedEvent = this.updateUserInputtedEvent.bind(this);
     this.addUserInputtedEvent = this.addUserInputtedEvent.bind(this);
+  }
+
+  componentDidMount() {
+    $.ajax({
+      url: `http://localhost:3007/events`,
+      method: 'GET',
+      dataType: 'json',
+      success: (events) => {
+        this.setState({ events });
+      },
+      error: (err) => {
+        console.log(err);
+      }
+    });
   }
 
   updateUserInputtedEvent(e) {

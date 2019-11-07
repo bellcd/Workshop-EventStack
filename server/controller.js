@@ -1,8 +1,11 @@
 const db = require('../db/index.js');
 
-module.exports.getEvents = () => {
+module.exports.getEvents = (callback) => {
   db.Event.find((err, events) => {
-    if (err) { return console.log(err); }
-    return events;
+    if (err) {
+      callback(err, null);
+      return;
+    }
+    callback(null, events);
   });
 }
