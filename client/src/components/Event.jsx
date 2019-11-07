@@ -2,7 +2,7 @@ import React from 'react';
 
 const Event = ({ event }) => {
     return (
-      <div>{event.name}</div>
+      <div>{event.title}</div>
     );
 
 }

@@ -7,7 +7,12 @@ export default class App extends Component {
     super(props)
 
     this.state = {
-      userInputtedEvent: '',
+      title: '',
+      description: '',
+      summary: '',
+      startDate: '',
+      endDate: '',
+      cost: '',
       searchTerm: '',
       events: [],
       filteredEvents: []
@@ -15,8 +20,14 @@ export default class App extends Component {
 
     this.search = this.search.bind(this);
     this.updateSearch = this.updateSearch.bind(this);
-    this.updateUserInputtedEvent = this.updateUserInputtedEvent.bind(this);
-    this.addUserInputtedEvent = this.addUserInputtedEvent.bind(this);
+    this.addEvent = this.addEvent.bind(this);
+
+    this.updateTitle = this.updateTitle.bind(this);
+    this.updateDescription = this.updateDescription.bind(this);
+    this.updateSummary = this.updateSummary.bind(this);
+    this.updateStartDate = this.updateStartDate.bind(this);
+    this.updateEndDate = this.updateEndDate.bind(this);
+    this.updateCost = this.updateCost.bind(this);
   }
 
   componentDidMount() {
@@ -33,15 +44,40 @@ export default class App extends Component {
     });
   }
 
-  updateUserInputtedEvent(e) {
-    this.setState({
-      userInputtedEvent: e.target.value
-    });
+  updateTitle(e) {
+    this.setState({ title: e.target.value })
   }
 
-  addUserInputtedEvent() {
+  updateDescription(e) {
+    this.setState({ description: e.target.value })
+  }
+
+  updateSummary(e) {
+    this.setState({ summary: e.target.value })
+  }
+
+  updateStartDate(e) {
+    this.setState({ startDate: e.target.value })
+  }
+
+  updateEndDate(e) {
+    this.setState({ endDate: e.target.value })
+  }
+
+  updateCost(e) {
+    this.setState({ cost: e.target.value })
+  }
+
+  addEvent() {
     this.setState((state, props) => {
-      state.events.push({ name: state.userInputtedEvent });
+      state.events.push({
+        title: state.title,
+        description: state.description,
+        summary: state.summary,
+        startDate: state.startDate,
+        endDate: state.endDate,
+        cost: state.cost
+      });
 
       return { events: state.events };
     });
@@ -70,12 +106,38 @@ export default class App extends Component {
     return (
       <div>
         <h1>EventStack</h1>
+        <h2>Add Your Event:</h2>
         <div>
-          Add Your Event:
-          <label htmlFor="user-inputted-event"></label>
-          <input id="user-inputted-event" type="text" value={this.state.userInputtedEvent} onChange={this.updateUserInputtedEvent}></input>
-          <button onClick={this.addUserInputtedEvent}>Add</button>
+          Title
+          <label htmlFor="title"></label>
+          <input id="title" type="text" value={this.state.title} onChange={this.updateTitle}></input>
         </div>
+        <div>
+          Description
+          <label htmlFor="description"></label>
+          <input id="description" type="text" value={this.state.description} onChange={this.updateDescription}></input>
+        </div>
+        <div>
+          Summary
+          <label htmlFor="summary"></label>
+          <input id="summary" type="text" value={this.state.summary} onChange={this.updateSummary}></input>
+        </div>
+        <div>
+          Start Date
+          <label htmlFor="start-date"></label>
+          <input id="start-date" type="text" value={this.state.startDate} onChange={this.updateStartDate}></input>
+        </div>
+        <div>
+          End Date
+          <label htmlFor="end-date"></label>
+          <input id="end-date" type="text" value={this.state.endDate} onChange={this.updateEndDate}></input>
+        </div>
+        <div>
+          Cost
+          <label htmlFor="cost"></label>
+          <input id="cost" type="text" value={this.state.cost} onChange={this.updateCost}></input>
+        </div>
+        <button onClick={this.addEvent}>Add</button>
         <EventList events={this.state.events}></EventList>
         <div>
           Search for an event
