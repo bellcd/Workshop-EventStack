@@ -32,6 +32,10 @@ export default class App extends Component {
       return event.name.includes(this.state.searchTerm);
     });
 
+    if (filteredEvents.length === 0) {
+      filteredEvents.push({ name: 'No matches!'});
+    }
+
     this.setState({ filteredEvents });
   }
 
