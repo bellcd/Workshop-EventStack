@@ -1,0 +1,3 @@
+module.exports = {
+  EVENTBRITE: `FILL_IN_YOUR_EVENTBRITE_API_KEY_HERE`
+}

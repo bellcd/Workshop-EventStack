@@ -14,6 +14,7 @@ export default class App extends Component {
       endDate: '',
       cost: '',
       searchTerm: '',
+      possibleEvents: [],
       events: [],
       filteredEvents: []
     }
@@ -34,6 +35,21 @@ export default class App extends Component {
 
   componentDidMount() {
     this.getEvents();
+    this.getPossibleEvents();
+  }
+
+  getPossibleEvents() {
+    $.ajax({
+      url: `http://localhost:3007/possible-events`,
+      method: 'GET',
+      dataType: 'json',
+      success: (possibleEvents) => {
+        this.setState({ possibleEvents });
+      },
+      error: (err) => {
+        console.log(err);
+      }
+    });
   }
 
   getEvents() {
